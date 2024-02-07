@@ -74,8 +74,9 @@ pipeline {
 
           def filecontent = readFile encoding: 'Base64', file: filePath;
 
-          println('response ' + checkResp.getHeaders('X-CSRF-Token'))
-         
+          def checkRespHeaders = checkResp.getHeaders();
+          println(checkRespHeaders)
+          println(checkRespHeaders.getClass())
           if (checkResp.status == 404) {
             //Upload integration flow via POST
 			      println("Flow does not yet exist on configured tenant.");
