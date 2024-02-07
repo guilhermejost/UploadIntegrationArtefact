@@ -47,7 +47,7 @@ pipeline {
           def filePath = env.IntegrationFlowID + ".zip";
           println('filePath ' + filePath)
           println('folder ' + folder)
-          zip dir: 'C:\\data\\jenkins_home\\workspace\\UploadIntegrationArtefact\\IntegrationContent\\IntegrationArtefacts\\IntegrationIflow_CICD', glob: '', zipFile: filePath;
+          zip dir: folder, glob: '', zipFile: folder + filePath;
       
           //get token
 		      println("Requesting token from Cloud Integration tenant");
