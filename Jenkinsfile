@@ -47,7 +47,8 @@ pipeline {
           def filePath = env.IntegrationFlowID + ".zip";
           println('filePath ' + filePath)
           println('folder ' + folder)
-          zip dir: folder, glob: '', zipFile: folder + filePath;
+          //zip dir: folder, glob: '', zipFile: folder + filePath;
+          zip zipFile: folder, archive: false, dir: filePath
       
           //get token
 		      println("Requesting token from Cloud Integration tenant");
