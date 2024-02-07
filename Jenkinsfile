@@ -49,6 +49,8 @@ pipeline {
           println('folder ' + folder)
           zip dir: folder, glob: '', zipFile: filePath;
 
+          def files = findFiles(glob: '**/metainfo.prop')
+          println(files)
           //get token
 		      println("Requesting token from Cloud Integration tenant");
           /*def getTokenResp = httpRequest acceptType: 'APPLICATION_JSON',
