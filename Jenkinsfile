@@ -67,14 +67,14 @@ pipeline {
               [maskValue: false, name: 'Authorization', value: token], [name: 'X-CSRF-Token', value: 'Fetch']
             ],
             httpMode: 'GET',
-            responseHandle: 'STRING',
+            responseHandle: 'LEAVE_OPEN',
             validResponseCodes: '200,201,202,404',
             timeout: 30,
             url: 'https://' + env.CPIHost + '/api/v1/IntegrationDesigntimeArtifacts(Id=\'' + env.IntegrationFlowID + '\',Version=\'active\')';
 
           def filecontent = readFile encoding: 'Base64', file: filePath;
 
-          println('response ' + checkResp.getHeaders('X-CSRF-Token'))
+          println('response ' + checkResp.getHeaders())
          
           if (checkResp.status == 404) {
             //Upload integration flow via POST
