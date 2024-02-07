@@ -48,7 +48,11 @@ pipeline {
           println('filePath ' + filePath)
           println('folder ' + folder)
           //zip dir: folder, glob: '', zipFile: folder + filePath;
-          zip zipFile: folder, archive: false, dir: filePath
+          //zip zipFile: folder, archive: false, dir: filePath
+
+          bat 'mkdir archive'
+          bat 'echo test > archive/test.txt'
+          zip zipFile: 'test.zip', archive: false, dir: 'archive'
       
           //get token
 		      println("Requesting token from Cloud Integration tenant");
