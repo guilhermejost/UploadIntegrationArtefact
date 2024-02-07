@@ -70,7 +70,7 @@ pipeline {
             url: 'https://' + env.CPIHost + '/api/v1';
 
           def checkRespTokenHeaders = checkRespToken.getHeaders();
-          println(checkRespTokenHeaders);
+          println(checkRespTokenHeaders["Set-Cookie"][0]);
 
 
           def jsessionid = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][0], 'JSESSIONID')
