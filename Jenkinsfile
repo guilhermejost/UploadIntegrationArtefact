@@ -66,7 +66,7 @@ pipeline {
           println(checkRespTokenHeaders);
 
           def extrairValorDoCookie(cookies, nomeDoCookie) {
-            def regex = "${nomeDoCookie}=(.*?)(?:;|$)"
+            def regex = "${nomeDoCookie}=(.*?)(?:;|\$)"
             def match = cookies =~ regex
             return match ? match[0][1] : null
           }
