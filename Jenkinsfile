@@ -49,7 +49,7 @@ pipeline {
           println('folder ' + folder)
           zip dir: folder, glob: '**/', zipFile: filePath;
 
-          println(files)
+      
           //get token
 		      println("Requesting token from Cloud Integration tenant");
           /*def getTokenResp = httpRequest acceptType: 'APPLICATION_JSON',
