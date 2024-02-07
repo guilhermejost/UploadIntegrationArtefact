@@ -52,7 +52,8 @@ pipeline {
 
           bat 'mkdir archive'
           bat 'echo test > archive/test.txt'
-          zip zipFile: 'test.zip', archive: false, dir: 'archive'
+          zip zipFile: 'test.zip', archive: false, dir: 'archive' 
+          archiveArtifacts artifacts: 'test.zip', fingerprint: true
       
           //get token
 		      println("Requesting token from Cloud Integration tenant");
