@@ -49,22 +49,25 @@ pipeline {
           zip zipFile: filePath, archive: false, dir: folder
       
           //get token
-		      println("Requesting token from Cloud Integration tenant");
-          /*def getTokenResp = httpRequest acceptType: 'APPLICATION_JSON',
-            authentication: env.CPIOAuthCredentials,
-            contentType: 'APPLICATION_JSON',
-            httpMode: 'POST',
+		      println("Requesting X-CSRF-Token from Cloud Integration tenant");
+          def checkRespToken = httpRequest acceptType: 'APPLICATION_JSON',
+            customHeaders: [
+              [maskValue: false, name: 'Authorization', value: token], [name: 'X-CSRF-Token', value: 'Fetch']
+            ],
+            httpMode: 'GET',
             responseHandle: 'LEAVE_OPEN',
+            validResponseCodes: '200,201,202,404',
             timeout: 30,
-            url: 'https://' + env.CPIOAuthHost + '/oauth/token?grant_type=client_credentials';
-          def jsonObjToken = readJSON text: getTokenResp.content
-          */
+            url: 'https://' + env.CPIHost + '/api/v1';
+
+          def checkRespTokenHeaders = checkRespToken.getHeaders();
+          def csrfToken = checkRespTokenHeaders["X-CSRF-Token"][0];
           def token = "Basic " + env.CPIOAuthCredentials
 
           //check if the flow already exists on the tenant
           def checkResp = httpRequest acceptType: 'APPLICATION_JSON',
             customHeaders: [
-              [maskValue: false, name: 'Authorization', value: token], [name: 'X-CSRF-Token', value: 'Fetch']
+              [maskValue: false, name: 'Authorization', value: token]
             ],
             httpMode: 'GET',
             responseHandle: 'LEAVE_OPEN',
@@ -73,9 +76,6 @@ pipeline {
             url: 'https://' + env.CPIHost + '/api/v1/IntegrationDesigntimeArtifacts(Id=\'' + env.IntegrationFlowID + '\',Version=\'active\')';
 
           def filecontent = readFile encoding: 'Base64', file: filePath;
-
-          def checkRespHeaders = checkResp.getHeaders();
-          def csrfToken = checkRespHeaders["X-CSRF-Token"][0];
           
           if (checkResp.status == 404) {
             //Upload integration flow via POST
