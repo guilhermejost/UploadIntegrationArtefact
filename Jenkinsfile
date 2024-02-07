@@ -45,10 +45,6 @@ pipeline {
 		      //zip the flow content 
           def folder = env.GITFolder + '/' + env.IntegrationFlowID + '/';
           def filePath = env.IntegrationFlowID + ".zip";
-          println('filePath ' + filePath)
-          println('folder ' + folder)
-          //zip dir: folder, glob: '', zipFile: folder + filePath;
-          //zip zipFile: folder, archive: false, dir: filePath
 
           zip zipFile: filePath, archive: false, dir: folder
       
@@ -92,6 +88,7 @@ pipeline {
 
             //upload
 			      println("Uploading flow.");
+            println(postPayload);
             def postResp = httpRequest acceptType: 'APPLICATION_JSON',
               contentType: 'APPLICATION_JSON',
               customHeaders: [
