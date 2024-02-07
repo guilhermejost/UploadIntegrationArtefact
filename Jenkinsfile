@@ -64,7 +64,7 @@ pipeline {
           //check if the flow already exists on the tenant
           def checkResp = httpRequest acceptType: 'APPLICATION_JSON',
             customHeaders: [
-              [maskValue: false, name: 'Authorization', value: token, name: 'X-CSRF-Token', value: 'Fetch' ]
+              [maskValue: false, name: 'Authorization', value: token], [name: 'X-CSRF-Token', value: 'Fetch']
             ],
             httpMode: 'GET',
             responseHandle: 'LEAVE_OPEN',
@@ -74,7 +74,7 @@ pipeline {
 
           def filecontent = readFile encoding: 'Base64', file: filePath;
 
-          println(checkResp)
+          println('filecontent ' + filecontent)
           if (checkResp.status == 404) {
             //Upload integration flow via POST
 			      println("Flow does not yet exist on configured tenant.");
