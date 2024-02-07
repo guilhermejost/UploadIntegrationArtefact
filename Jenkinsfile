@@ -74,9 +74,11 @@ pipeline {
 
 
           def jsessionid = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][0], 'JSESSIONID')
+          def jtenantSessionId  = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][0], 'JTENANTSESSIONID_dd8d906bf')
+          def bigIpServer = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][0], 'BIGipServerl5000tmnavphcip.factoryus2.customdomain')
 
-          println(jsessionid);
-
+          def cookie = jsessionId +'; ' + jtenantsessionId +'; ' + bigIpServer +';';
+          println(cookie);
           def csrfToken = checkRespTokenHeaders["X-CSRF-Token"][0];
           
 
@@ -110,7 +112,7 @@ pipeline {
             def postResp = httpRequest acceptType: 'APPLICATION_JSON',
               contentType: 'APPLICATION_JSON',
               customHeaders: [
-                [maskValue: false, name: 'Authorization', value: token], [name: 'X-CSRF-Token', value: csrfToken]
+                [maskValue: false, name: 'Authorization', value: token], [name: 'X-CSRF-Token', value: csrfToken], [name: 'Cookie', value: cookie]
               ],
               httpMode: 'POST',
               requestBody: postPayload,
@@ -128,7 +130,7 @@ pipeline {
             def putResp = httpRequest acceptType: 'APPLICATION_JSON',
               contentType: 'APPLICATION_JSON',
               customHeaders: [
-                [maskValue: false, name: 'Authorization', value: token], [name: 'X-CSRF-Token', value: csrfToken]
+                [maskValue: false, name: 'Authorization', value: token], [name: 'X-CSRF-Token', value: csrfToken], [name: 'Cookie', value: cookie]
               ],
               httpMode: 'PUT',
               requestBody: putPayload,
