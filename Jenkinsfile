@@ -141,7 +141,7 @@ pipeline {
             println("Deploying integration flow");
             def deployResp = httpRequest httpMode: 'POST',
               customHeaders: [
-                [maskValue: false, name: 'Authorization', value: token], [name: 'X-CSRF-Token', value: csrfToken]
+                [maskValue: false, name: 'Authorization', value: token], [name: 'X-CSRF-Token', value: csrfToken],  [name: 'Cookie', value: cookie]
               ],
               ignoreSslErrors: true,
               timeout: 30,
