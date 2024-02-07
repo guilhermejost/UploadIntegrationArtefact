@@ -155,7 +155,7 @@ pipeline {
             while (counter < env.DeploymentCheckRetryCounter.toInteger() & continueLoop == true) {
               Thread.sleep(60000);
               counter = counter + 1;
-              println('Running number check: ' counter)
+              println('Running number check: '  + counter)
               def statusResp = httpRequest acceptType: 'APPLICATION_JSON',
                 customHeaders: [
                   [maskValue: false, name: 'Authorization', value: token]
@@ -192,7 +192,7 @@ pipeline {
                 println("The integration flow is not yet started. Will wait 3s and then check again.")
               }
             }
-            if (!deploymentStatus.equalsIgnoreCase("Started")) {
+            if (!deploymentStatus.equalsIgnoreCase("STARTED")) {
               error("No final deployment status could be reached. Kindly check the tenant for any issue.");
             }
           }
