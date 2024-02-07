@@ -43,7 +43,7 @@ pipeline {
           ])
 
 		      //zip the flow content 
-          def folder = env.GITFolder + ''\'' + env.IntegrationFlowID + ''\'';
+          def folder = env.GITFolder + '"\\"' + env.IntegrationFlowID + '"\\"';
           def filePath = env.IntegrationFlowID + ".zip";
           println('filePath ' + filePath)
           println('folder ' + folder)
