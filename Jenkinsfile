@@ -46,6 +46,7 @@ pipeline {
           def folder = env.GITFolder + '/' + env.IntegrationFlowID + '/';
           def filePath = env.IntegrationFlowID + ".zip";
           println('filePath ' + filePath)
+          println('folder ' + folder)
           zip dir: folder, glob: '', zipFile: filePath;
 
           //get token
