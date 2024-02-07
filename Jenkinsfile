@@ -167,7 +167,7 @@ pipeline {
               deploymentStatus = jsonObj.d.Status;
 
               println("Deployment status: " + deploymentStatus);
-              if (deploymentStatus.equalsIgnoreCase("Error")) {
+              if (deploymentStatus.equalsIgnoreCase("ERROR")) {
                 //get error details
                 def deploymentErrorResp = httpRequest acceptType: 'APPLICATION_JSON',
                   customHeaders: [
@@ -183,7 +183,7 @@ pipeline {
                 statusResp.close();
                 deploymentErrorResp.close();
 				        error("Integration flow not deployed successfully. Ending job now.");
-              } else if (deploymentStatus.equalsIgnoreCase("Started")) {
+              } else if (deploymentStatus.equalsIgnoreCase("STARTED")) {
                 println("Integration flow deployment was successful")
                 statusResp.close();
                 continueLoop = false
