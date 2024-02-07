@@ -3,13 +3,12 @@ pipeline {
 
   //Configure the following environment variables before executing the Jenkins Job
   environment {
-    IntegrationFlowID = "IntegrationFlow1"
+    IntegrationFlowID = "IntegrationIflow_CICD"
     IntegrationPackage = "CICD" //relevant for flows that are uploaded the first time 
     DeployFlow = true //if the flow should only be uploaded, set this to false
     DeploymentCheckRetryCounter = 20 //multiply by 3 to get the maximum deployment time
-    CPIHost = "${env.CPI_HOST}"
-    CPIOAuthHost = "${env.CPI_OAUTH_HOST}"
-    CPIOAuthCredentials = "${env.CPI_OAUTH_CRED}"
+    CPIHost = "${env.CPI_HOST_PRD}"
+    CPIOAuthCredentials = "${env.CPI_OAUTH_CRED_PRD}"
     GITRepositoryURL = "${env.GIT_REPOSITORY_URL}"
     GITCredentials = "${env.GIT_CRED}"
     GITBranch = "${env.GIT_BRANCH_NAME}"
@@ -51,7 +50,7 @@ pipeline {
 
           //get token
 		      println("Requesting token from Cloud Integration tenant");
-          def getTokenResp = httpRequest acceptType: 'APPLICATION_JSON',
+          /*def getTokenResp = httpRequest acceptType: 'APPLICATION_JSON',
             authentication: env.CPIOAuthCredentials,
             contentType: 'APPLICATION_JSON',
             httpMode: 'POST',
@@ -59,7 +58,8 @@ pipeline {
             timeout: 30,
             url: 'https://' + env.CPIOAuthHost + '/oauth/token?grant_type=client_credentials';
           def jsonObjToken = readJSON text: getTokenResp.content
-          def token = "Bearer " + jsonObjToken.access_token
+          */
+          def token = "Basic " + env.CPICredentials
 
           //check if the flow already exists on the tenant
           def checkResp = httpRequest acceptType: 'APPLICATION_JSON',
