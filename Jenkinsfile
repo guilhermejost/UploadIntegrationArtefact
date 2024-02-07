@@ -63,6 +63,7 @@ pipeline {
             url: 'https://' + env.CPIHost + '/api/v1';
 
           def checkRespTokenHeaders = checkRespToken.getHeaders();
+          println(checkRespTokenHeaders);
           def csrfToken = checkRespTokenHeaders["X-CSRF-Token"][0];
           
 
