@@ -50,10 +50,7 @@ pipeline {
           //zip dir: folder, glob: '', zipFile: folder + filePath;
           //zip zipFile: folder, archive: false, dir: filePath
 
-          bat 'mkdir archive'
-          bat 'echo test > archive/test.txt'
-          zip zipFile: 'test.zip', archive: false, dir: 'archive' 
-          archiveArtifacts artifacts: 'test.zip', fingerprint: true
+          zip zipFile: filePath, archive: false, dir: folder
       
           //get token
 		      println("Requesting token from Cloud Integration tenant");
