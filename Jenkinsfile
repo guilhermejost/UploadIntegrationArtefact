@@ -74,7 +74,7 @@ pipeline {
 
           def filecontent = readFile encoding: 'Base64', file: filePath;
 
-          println('response ' + checkResp)
+          println('response ' + checkResp.getHeaders())
           if (checkResp.status == 404) {
             //Upload integration flow via POST
 			      println("Flow does not yet exist on configured tenant.");
