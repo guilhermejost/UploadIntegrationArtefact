@@ -70,19 +70,15 @@ pipeline {
             url: 'https://' + env.CPIHost + '/api/v1';
 
           def checkRespTokenHeaders = checkRespToken.getHeaders();
-          println(checkRespTokenHeaders);
-          println(checkRespTokenHeaders["Set-Cookie"][1]);
-
-
+          // create cookie
           def jsessionid = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][0], 'JSESSIONID')
           def jtenantSessionId  = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][1], 'JTENANTSESSIONID_dd8d906bf')
           def bigIpServer = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][2], 'BIGipServerl5000tmnavphcip.factoryus2.customdomain')
 
           def cookie = 'JSESSIONID=' + jsessionid +';JTENANTSESSIONID_dd8d906bf=' + jtenantSessionId +';BIGipServerl5000tmnavphcip.factoryus2.customdomain=' + bigIpServer +';';
-          println(cookie);
+          //create X-CSRF-Token
           def csrfToken = checkRespTokenHeaders["X-CSRF-Token"][0];
           
-
           //check if the flow already exists on the tenant
           def checkResp = httpRequest acceptType: 'APPLICATION_JSON',
             customHeaders: [
