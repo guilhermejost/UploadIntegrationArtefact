@@ -47,8 +47,10 @@ pipeline {
           def filePath = env.IntegrationFlowID + ".zip";
 
           zip zipFile: filePath, archive: false, dir: folder
-      
-          //get token
+
+          def token = "Basic " + env.CPIOAuthCredentials
+
+          //get X-CSRF-Token
 		      println("Requesting X-CSRF-Token from Cloud Integration tenant");
           def checkRespToken = httpRequest acceptType: 'APPLICATION_JSON',
             customHeaders: [
@@ -62,7 +64,7 @@ pipeline {
 
           def checkRespTokenHeaders = checkRespToken.getHeaders();
           def csrfToken = checkRespTokenHeaders["X-CSRF-Token"][0];
-          def token = "Basic " + env.CPIOAuthCredentials
+          
 
           //check if the flow already exists on the tenant
           def checkResp = httpRequest acceptType: 'APPLICATION_JSON',
