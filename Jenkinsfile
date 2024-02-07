@@ -75,9 +75,8 @@ pipeline {
           def filecontent = readFile encoding: 'Base64', file: filePath;
 
           def checkRespHeaders = checkResp.getHeaders();
-          println(checkRespHeaders["X-CSRF-Token"][0])
-          println(checkRespHeaders.get('X-CSRF-Token'))
-          println(checkRespHeaders.getClass())
+          def csrfToken = checkRespHeaders["X-CSRF-Token"][0];
+          
           if (checkResp.status == 404) {
             //Upload integration flow via POST
 			      println("Flow does not yet exist on configured tenant.");
@@ -91,11 +90,11 @@ pipeline {
 
             //upload
 			      println("Uploading flow.");
-            println(postPayload);
+
             def postResp = httpRequest acceptType: 'APPLICATION_JSON',
               contentType: 'APPLICATION_JSON',
               customHeaders: [
-                [maskValue: false, name: 'Authorization', value: token]
+                [maskValue: false, name: 'Authorization', value: token], [name: 'X-CSRF-Token', value: csrfToken]
               ],
               httpMode: 'POST',
               requestBody: postPayload,
@@ -113,7 +112,7 @@ pipeline {
             def putResp = httpRequest acceptType: 'APPLICATION_JSON',
               contentType: 'APPLICATION_JSON',
               customHeaders: [
-                [maskValue: false, name: 'Authorization', value: token]
+                [maskValue: false, name: 'Authorization', value: token], [name: 'X-CSRF-Token', value: csrfToken]
               ],
               httpMode: 'PUT',
               requestBody: putPayload,
@@ -127,7 +126,7 @@ pipeline {
             println("Deploying integration flow");
             def deployResp = httpRequest httpMode: 'POST',
               customHeaders: [
-                [maskValue: false, name: 'Authorization', value: token]
+                [maskValue: false, name: 'Authorization', value: token], [name: 'X-CSRF-Token', value: csrfToken]
               ],
               ignoreSslErrors: true,
               timeout: 30,
