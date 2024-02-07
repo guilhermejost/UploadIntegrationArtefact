@@ -67,7 +67,7 @@ pipeline {
               [maskValue: false, name: 'Authorization', value: token], [name: 'X-CSRF-Token', value: 'Fetch']
             ],
             httpMode: 'GET',
-            responseHandle: 'RETURN_CONTENT_AND_HEADERS',
+            responseHandle: 'STRING',
             validResponseCodes: '200,201,202,404',
             timeout: 30,
             url: 'https://' + env.CPIHost + '/api/v1/IntegrationDesigntimeArtifacts(Id=\'' + env.IntegrationFlowID + '\',Version=\'active\')';
