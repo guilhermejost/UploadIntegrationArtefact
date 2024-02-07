@@ -74,7 +74,7 @@ pipeline {
 
           def filecontent = readFile encoding: 'Base64', file: filePath;
 
-          println('response ' + checkResp.getHeaders())
+          println('response ' + checkResp.getHeaders('X-CSRF-Token'))
          
           if (checkResp.status == 404) {
             //Upload integration flow via POST
