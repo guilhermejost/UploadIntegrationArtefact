@@ -64,7 +64,7 @@ pipeline {
           //check if the flow already exists on the tenant
           def checkResp = httpRequest acceptType: 'APPLICATION_JSON',
             customHeaders: [
-              [maskValue: false, name: 'Authorization', value: token, X-CSRF-Token: 'Fetch' ]
+              [maskValue: false, name: 'Authorization', value: token, name: 'X-CSRF-Token', value: 'Fetch' ]
             ],
             httpMode: 'GET',
             responseHandle: 'LEAVE_OPEN',
