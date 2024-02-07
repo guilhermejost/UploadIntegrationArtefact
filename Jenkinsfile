@@ -59,7 +59,7 @@ pipeline {
             url: 'https://' + env.CPIOAuthHost + '/oauth/token?grant_type=client_credentials';
           def jsonObjToken = readJSON text: getTokenResp.content
           */
-          def token = "Basic " + env.CPICredentials
+          def token = "Basic " + env.CPIOAuthCredentials
 
           //check if the flow already exists on the tenant
           def checkResp = httpRequest acceptType: 'APPLICATION_JSON',
