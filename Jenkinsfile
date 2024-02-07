@@ -45,7 +45,7 @@ pipeline {
 		      //zip the flow content 
           def folder = env.GITFolder + '/' + env.IntegrationFlowID + '/';
           def filePath = env.IntegrationFlowID + ".zip";
-
+          println('filePath ' + filePath)
           zip dir: folder, glob: '', zipFile: filePath;
 
           //get token
@@ -73,6 +73,8 @@ pipeline {
             url: 'https://' + env.CPIHost + '/api/v1/IntegrationDesigntimeArtifacts(Id=\'' + env.IntegrationFlowID + '\',Version=\'active\')';
 
           def filecontent = readFile encoding: 'Base64', file: filePath;
+
+          println('filecontent ' + filecontent)
           if (checkResp.status == 404) {
             //Upload integration flow via POST
 			      println("Flow does not yet exist on configured tenant.");
