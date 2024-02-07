@@ -70,11 +70,12 @@ pipeline {
             url: 'https://' + env.CPIHost + '/api/v1';
 
           def checkRespTokenHeaders = checkRespToken.getHeaders();
-          println(checkRespTokenHeaders["Set-Cookie"][0]);
+          println(checkRespTokenHeaders);
+          println(checkRespTokenHeaders["Set-Cookie"][1]);
 
 
           def jsessionid = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][0], 'JSESSIONID')
-          def jtenantSessionId  = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][0], 'JTENANTSESSIONID_dd8d906bf')
+          def jtenantSessionId  = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][1], 'JTENANTSESSIONID_dd8d906bf')
           def bigIpServer = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][0], 'BIGipServerl5000tmnavphcip.factoryus2.customdomain')
 
           def cookie = jsessionid +'; ' + jtenantSessionId +'; ' + bigIpServer +';';
