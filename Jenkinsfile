@@ -75,7 +75,7 @@ pipeline {
           def filecontent = readFile encoding: 'Base64', file: filePath;
 
           def checkRespHeaders = checkResp.getHeaders();
-          println(checkRespHeaders["X-CSRF-Token"])
+          println(checkRespHeaders["X-CSRF-Token"][0])
           println(checkRespHeaders.get('X-CSRF-Token'))
           println(checkRespHeaders.getClass())
           if (checkResp.status == 404) {
