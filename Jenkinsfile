@@ -64,6 +64,17 @@ pipeline {
 
           def checkRespTokenHeaders = checkRespToken.getHeaders();
           println(checkRespTokenHeaders);
+
+          def extrairValorDoCookie(cookies, nomeDoCookie) {
+            def regex = "${nomeDoCookie}=(.*?)(?:;|$)"
+            def match = cookies =~ regex
+            return match ? match[0][1] : null
+          }
+
+          def jsessionid = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][0], 'JSESSIONID')
+
+          println(jsessionid);
+
           def csrfToken = checkRespTokenHeaders["X-CSRF-Token"][0];
           
 
