@@ -76,9 +76,9 @@ pipeline {
 
           def jsessionid = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][0], 'JSESSIONID')
           def jtenantSessionId  = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][1], 'JTENANTSESSIONID_dd8d906bf')
-          def bigIpServer = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][0], 'BIGipServerl5000tmnavphcip.factoryus2.customdomain')
+          def bigIpServer = extrairValorDoCookie(checkRespTokenHeaders["Set-Cookie"][2], 'BIGipServerl5000tmnavphcip.factoryus2.customdomain')
 
-          def cookie = jsessionid +'; ' + jtenantSessionId +'; ' + bigIpServer +';';
+          def cookie = 'JSESSIONID=' + jsessionid +';JTENANTSESSIONID_dd8d906bf=' + jtenantSessionId +';BIGipServerl5000tmnavphcip.factoryus2.customdomain=' + bigIpServer +';';
           println(cookie);
           def csrfToken = checkRespTokenHeaders["X-CSRF-Token"][0];
           
